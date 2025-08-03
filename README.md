@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SOP AI Generator
 
-## Getting Started
+**Create professional Statement of Purpose letters for your visa application in minutes**
 
-First, run the development server:
+Transform your visa application process with AI-powered document generation that helps you craft compelling, professional letters that immigration officers want to read.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🚀 What You Get
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 📝 **Letter of Explanation**
+- Address employment or education gaps professionally
+- Demonstrate genuine intent to study abroad
+- Explain your circumstances with confidence
+- Show strong ties to your home country
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 📚 **Study Plan**
+- Detailed semester-by-semester academic roadmap
+- Clear connection between your goals and chosen program
+- Professional formatting that impresses visa officers
+- Timeline that shows serious academic planning
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 💰 **Financial Statement**
+- Comprehensive funding breakdown
+- Living expenses calculation
+- Sponsor information (when applicable)
+- Bank statement summaries that build confidence
 
-## Learn More
+## ✨ Key Features
 
-To learn more about Next.js, take a look at the following resources:
+**🤖 AI-Powered Generation**
+Complete your profile once, and our AI creates personalized letters tailored to your specific situation and target program.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**📱 Easy Profile Setup**
+Step-by-step form guides you through entering your personal information, academic background, target program, and financial details.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+**✏️ Edit & Customize**
+Generated letters are fully editable. Make changes, add personal touches, and ensure every word represents you perfectly.
 
-## Deploy on Vercel
+**📁 Letter Management**
+Save, organize, and access all your generated letters in one place. Download as text files for easy sharing.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**⚡ Instant Results**
+Generate professional letters in seconds, not hours. No more staring at blank pages wondering what to write.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**🔒 Secure & Private**
+Your personal information is protected with enterprise-grade security. Only you have access to your documents.
+
+## 🎯 Perfect For
+
+- **Student visa applications** (Study permits, F-1, Tier 4)
+- **University applications** requiring personal statements
+- **Immigration consultants** serving multiple clients
+- **Anyone struggling** with visa documentation
+
+## 💼 Pricing
+
+**Free Plan**
+- Generate up to 3 letters per month
+- All letter types included
+- Full editing capabilities
+- Letter history and downloads
+
+Ready to transform your visa application? **[Get Started Free →](https://sopee-ai.vercel.app)**
+
+---
