@@ -4,12 +4,12 @@ import { generateText } from 'ai'
 import type { LetterType, LetterPrompts } from '@/types/letter'
 import type { StudentProfile, PersonalInfo, AcademicBackground, TargetProgram, FinancialInfo } from '@/types/profile'
 
-interface ProfileData {
+/* interface ProfileData {
   personalInfo: PersonalInfo
   academicBackground: AcademicBackground
   targetProgram: TargetProgram
   financialInfo?: FinancialInfo
-}
+} */
 
 export class LetterService {
   private static readonly letterPrompts: LetterPrompts = {

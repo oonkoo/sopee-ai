@@ -7,6 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { prisma } from '@/lib/prisma'
 import Link from 'next/link'
 import type { TargetProgram } from '@/types/profile'
+import SopeeLogo from '@/components/SopeeLogo'
 
 export default async function DashboardPage() {
   const { getUser } = getKindeServerSession()
@@ -39,10 +40,13 @@ export default async function DashboardPage() {
   const targetProgram = profile?.targetProgram as TargetProgram | null
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm border-b">
+    <div className="min-h-screen bg-background">
+      <nav className="bg-background shadow-sm border-b">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-xl font-bold">SOP AI Generator</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-xl font-bold flex items-center gap-2"><SopeeLogo size={32} /> SOPEE <span className='text-primary'>AI</span></h1>
+            <span className='bg-yellow-600/10 text-primary px-3 py-1 rounded-full italic'>Welcome, {user.given_name || user.email}</span>
+          </div>
           <div className="flex items-center gap-4">
             <Link href="/dashboard/profile">
               <Button variant="outline" size="sm">
@@ -54,7 +58,6 @@ export default async function DashboardPage() {
                 My Letters
               </Button>
             </Link>
-            <span>Welcome, {user.given_name || user.email}</span>
             <LogoutLink>
               <Button variant="outline" size="sm">
                 Logout
@@ -69,11 +72,11 @@ export default async function DashboardPage() {
           <h2 className="text-3xl font-bold mb-6">Dashboard</h2>
           
           {!hasProfile && (
-            <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+            <div className="rounded-lg p-4 mb-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium text-yellow-800">Complete Your Profile</h3>
-                  <p className="text-sm text-yellow-700">Create your student profile to start generating SOP letters</p>
+                  <h3 className="font-medium">Complete Your Profile</h3>
+                  <p className="text-sm">Create your student profile to start generating SOP letters</p>
                 </div>
                 <Link href="/dashboard/profile">
                   <Button>Create Profile</Button>
@@ -88,8 +91,10 @@ export default async function DashboardPage() {
                 <CardTitle>Letters Generated</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-3xl font-bold text-blue-600">
-                  {userData?.lettersGenerated || 0} / {userData?.lettersLimit || 3}
+                <p className="text-3xl font-bold space-x-1">
+                  <span className='text-primary'>{userData?.lettersGenerated || 0}</span>
+                  <span className="text-muted-foreground">/</span>
+                  <span className="text-muted-foreground">{userData?.lettersLimit || 3}</span>
                 </p>
                 <p className="text-sm text-gray-600">
                   {userData?.subscriptionType || 'Free'} plan limit
@@ -104,8 +109,8 @@ export default async function DashboardPage() {
               <CardContent>
                 {hasProfile ? (
                   <div>
-                    <p className="text-sm text-green-600 font-medium">✓ Profile Complete</p>
-                    <p className="text-xs text-gray-600 mt-1">
+                    <p className="text-sm text-green-600 font-medium bg-green-600/10 px-3 py-1 rounded-full w-fit">✓ Profile Complete</p>
+                    <p className="text-xs text-gray-600 mt-2">
                       Target: {targetProgram?.university || 'Not specified'}
                     </p>
                   </div>
@@ -120,10 +125,10 @@ export default async function DashboardPage() {
                 <CardTitle>Subscription</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-gray-600 capitalize">
+                <p className="text-sm text-primary font-medium bg-yellow-600/10 px-3 py-1 rounded-full w-fit capitalize">
                   {userData?.subscriptionType || 'Free'} Plan
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500 mt-2">
                   {userData?.lettersLimit || 3} letters per month
                 </p>
               </CardContent>

@@ -93,7 +93,7 @@ export default function LetterPreview({ letter, onBack }: LetterPreviewProps) {
               placeholder="Edit your letter content..."
             />
           ) : (
-            <div className="whitespace-pre-wrap font-mono text-sm bg-gray-50 p-4 rounded-md min-h-[500px]">
+            <div className="whitespace-pre-wrap font-sans text-lg bg-background p-4 rounded-md min-h-[500px]">
               {editedContent}
             </div>
           )}

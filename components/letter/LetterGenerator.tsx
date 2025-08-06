@@ -128,7 +128,7 @@ export default function LetterGenerator({ profile, user }: LetterGeneratorProps)
                 {user.lettersGenerated} of {user.lettersLimit} letters used
               </p>
             </div>
-            <div className="text-2xl font-bold text-blue-600">
+            <div className="text-2xl font-bold text-primary">
               {user.lettersLimit - user.lettersGenerated} remaining
             </div>
           </div>
