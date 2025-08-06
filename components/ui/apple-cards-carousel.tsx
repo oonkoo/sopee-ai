@@ -307,6 +307,7 @@ export const Card = ({
           </div>
           
           <Image
+            fill
             src={card.src}
             alt={card.title}
             className="absolute inset-0 z-10 object-cover w-full h-full transition-transform duration-300 group-hover:scale-105"
