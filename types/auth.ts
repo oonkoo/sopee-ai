@@ -10,6 +10,11 @@ export interface User {
   lettersGenerated: number
   lettersLimit: number
   kindeOrgId?: string | null
+  
+  // New fields for country-specific flow
+  targetCountry?: 'CANADA' | 'AUSTRALIA' | null
+  onboardingStatus: 'COUNTRY_SELECTION' | 'PROFILE_CREATION' | 'COMPLETED'
+  onboardingStep: number
 }
 
 export interface AuthUser {

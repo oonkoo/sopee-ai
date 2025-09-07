@@ -20,6 +20,11 @@ model User {
   lettersLimit      Int       @default(3)
   kindeOrgId        String?
   
+  // New fields for country-specific flow
+  targetCountry     Country?  
+  onboardingStatus  OnboardingStatus @default(COUNTRY_SELECTION)
+  onboardingStep    Int       @default(0)
+  
   // Relations
   profiles          StudentProfile[]
   letters           GeneratedLetter[]
@@ -40,11 +45,53 @@ model StudentProfile {
   createdAt         DateTime  @default(now())
   updatedAt         DateTime  @updatedAt
   
+  // Country-specific fields
+  country           Country
+  profileCompleteness Float   @default(0)
+  
+  // Enhanced profile fields from real SOP analysis
+  familyBackground     Json?
+  workExperience       Json?
+  extracurricularActivities Json?
+  languageProficiency  Json?
+  homeCountryTies      Json?
+  futureCareerPlans    Json?
+  whyThisCountry       Json?
+  whyThisUniversity    Json?
+  previousVisaHistory  Json?
+  sponsorshipDetails   Json?
+  maritalStatus        Json?
+  
+  // Additional comprehensive fields based on real SOPs
+  passportNumber       String?
+  parentsDetails       Json?    
+  propertyOwnership    Boolean  @default(false)
+  businessOwnership    Json?    
+  travelingCompanion   Json?    
+  programStructure     Json?    
+  tuitionAndCosts      Json?     
+  strongFamilyBonds    Json?    
+  countryAdvantages    Json?   
+  universityRanking    Json?    
+  accommodationPlans   Json?  
+  additionalCertifications Json?
+  freelancingExperience Json?    
+  salaryExpectations   Json?   
+  homeCountryOpportunities Json? 
+  
+  // Additional missing fields from components
+  entrepreneurialPlans Json?
+  returnPlans         Json?
+  additionalLanguageTests Json?
+  familyInTargetCountry Json?
+  additionalInfo      String?   // For "Any Other Relevant Information"
+  
   // Relations
   user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   letters           GeneratedLetter[]
   documents         Document[]
   
+  @@unique([userId, country])
   @@map("student_profiles")
 }
 
@@ -61,6 +108,16 @@ model GeneratedLetter {
   createdAt       DateTime  @default(now())
   feedbackRating  Int?      @db.SmallInt
   isFavorite      Boolean   @default(false)
+  
+  // New fields for pattern tracking and visa status
+  country         Country
+  patternsUsed    String[]
+  confidenceScore Float?
+  patternMatch    Float?
+  isVisaApproved  Boolean?
+  visaDecisionDate DateTime?
+  adminNotes      String?
+  rejectionReason String?
   
   // Relations
   user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -116,4 +173,54 @@ model UsageLog {
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
   @@map("usage_logs")
+}
+
+// New models for training data and patterns
+model TrainingDataEntry {
+  id              String    @id @default(cuid())
+  studentData     Json      // Complete student profile
+  sopContent      String    @db.Text
+  country         Country
+  isApproved      Boolean
+  submissionDate  DateTime
+  decisionDate    DateTime?
+  rejectionReason String?
+  keySuccessFactors String[]
+  extractedPatterns String[]
+  createdAt       DateTime  @default(now())
+  
+  @@map("training_data_entries")
+}
+
+model SOPPattern {
+  id              String      @id @default(cuid())
+  country         Country
+  patternType     PatternType
+  content         String      @db.Text
+  keyPhrases      String[]
+  context         String      // family_ties, career_goals, etc.
+  frequency       Int         @default(1)
+  successRate     Float?
+  lastUpdated     DateTime    @updatedAt
+  createdAt       DateTime    @default(now())
+  
+  @@map("sop_patterns")
+}
+
+// Enums
+enum Country {
+  CANADA
+  AUSTRALIA
+}
+
+enum OnboardingStatus {
+  COUNTRY_SELECTION
+  PROFILE_CREATION
+  COMPLETED
+}
+
+enum PatternType {
+  SUCCESS
+  FAILURE
+  NEUTRAL
 }

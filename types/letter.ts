@@ -1,5 +1,5 @@
 // types/letter.ts
-export type LetterType = 'explanation' | 'study_plan' | 'financial'
+export type LetterType = 'explanation' | 'study_plan' | 'financial' | 'sop'
 
 export interface GeneratedLetter {
   id: string
@@ -20,6 +20,7 @@ export interface LetterPrompts {
   explanation: string
   study_plan: string
   financial: string
+  sop: string
 }
 
 export interface GenerationRequest {

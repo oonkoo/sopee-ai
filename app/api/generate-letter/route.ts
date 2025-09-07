@@ -1,7 +1,8 @@
 // app/api/generate-letter/route.ts
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/kinde'
-import { LetterService } from '@/lib/services/letterService'
+import { AustraliaSopService } from '@/lib/services/australiaSopService'
+import { CanadaSopService } from '@/lib/services/canadaSopService'
 import { ProfileService } from '@/lib/services/profileService'
 import { prisma } from '@/lib/prisma'
 import type { LetterType } from '@/types/letter'
@@ -62,8 +63,25 @@ export async function POST(request: NextRequest) {
 
     const startTime = Date.now()
     
-    // Generate letter using AI
-    const generatedContent = await LetterService.generateLetter(letterType, profile)
+    // Generate content using country-specific services
+    let generatedContent: string
+    let title: string
+    
+    if (letterType === 'sop') {
+      // Use country-specific SOP services
+      if (profile.country === 'AUSTRALIA') {
+        generatedContent = await AustraliaSopService.generateSOP(profile)
+        title = AustraliaSopService.getSopTitle()
+      } else if (profile.country === 'CANADA') {
+        generatedContent = await CanadaSopService.generateSOP(profile)
+        title = CanadaSopService.getSopTitle()
+      } else {
+        throw new Error(`SOP generation not supported for country: ${profile.country}`)
+      }
+    } else {
+      // For other letter types, throw error since we're removing the old service
+      throw new Error(`Letter type '${letterType}' is no longer supported. Please use 'sop' for Statement of Purpose generation.`)
+    }
     
     const generationTime = Date.now() - startTime
     const wordCount = generatedContent.split(' ').length
@@ -76,11 +94,12 @@ export async function POST(request: NextRequest) {
         userId: user.id,
         profileId,
         letterType,
-        title: LetterService.getLetterTitle(letterType),
+        title,
         content: generatedContent,
         modelUsed: 'gemini-1.5-flash',
         generationTime,
-        wordCount
+        wordCount,
+        country: profile.country
       }
     })
 

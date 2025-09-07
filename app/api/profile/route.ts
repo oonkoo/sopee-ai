@@ -57,7 +57,13 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const profile = await ProfileService.createProfile(user.id, validationResult.data)
+    // Extract country from target program for profile creation
+    const profileData = {
+      ...validationResult.data,
+      country: validationResult.data.targetProgram.country as 'CANADA' | 'AUSTRALIA'
+    }
+    
+    const profile = await ProfileService.createProfile(user.id, profileData)
     return NextResponse.json({ profile })
   } catch (error) {
     console.error('Profile creation error:', error)
@@ -132,7 +138,20 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    const profile = await ProfileService.updateProfile(user.id, data)
+    // Determine country from existing profile or from targetProgram if provided
+    let country: 'CANADA' | 'AUSTRALIA' = 'AUSTRALIA' // default
+    
+    if (data.targetProgram?.country) {
+      country = data.targetProgram.country as 'CANADA' | 'AUSTRALIA'
+    } else {
+      // Get country from existing profile
+      const existingProfile = await ProfileService.getUserProfile(user.id)
+      if (existingProfile) {
+        country = existingProfile.country
+      }
+    }
+
+    const profile = await ProfileService.updateProfile(user.id, country, data)
     return NextResponse.json({ profile })
   } catch (error) {
     console.error('Profile update error:', error)

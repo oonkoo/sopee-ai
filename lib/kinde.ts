@@ -20,6 +20,9 @@ export async function getCurrentUser() {
         email: kindeUser.email!,
         firstName: kindeUser.given_name,
         lastName: kindeUser.family_name,
+        // New users start with country selection
+        onboardingStatus: 'COUNTRY_SELECTION',
+        onboardingStep: 0
       }
     })
   }
@@ -33,4 +36,30 @@ export async function requireAuth() {
     throw new Error('Unauthorized')
   }
   return user
+}
+
+export async function updateUserCountry(userId: string, country: 'CANADA' | 'AUSTRALIA') {
+  return await prisma.user.update({
+    where: { id: userId },
+    data: {
+      targetCountry: country,
+      onboardingStatus: 'PROFILE_CREATION',
+      onboardingStep: 1
+    }
+  })
+}
+
+export async function updateOnboardingProgress(userId: string, step: number, status?: 'PROFILE_CREATION' | 'COMPLETED') {
+  const updateData: { onboardingStep: number; onboardingStatus?: 'PROFILE_CREATION' | 'COMPLETED' } = {
+    onboardingStep: step
+  }
+  
+  if (status) {
+    updateData.onboardingStatus = status
+  }
+
+  return await prisma.user.update({
+    where: { id: userId },
+    data: updateData
+  })
 }

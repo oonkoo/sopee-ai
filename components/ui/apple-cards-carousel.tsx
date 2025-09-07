@@ -6,6 +6,7 @@ import React, {
   useState,
   createContext,
   useContext,
+  useCallback,
   JSX,
 } from "react";
 import { ChevronLeft, ChevronRight, X, Eye } from "lucide-react";
@@ -161,10 +162,10 @@ export const Card = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const { onCardClose } = useContext(CarouselContext);
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     setOpen(false);
     onCardClose(index);
-  };
+  }, [index, onCardClose]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -187,7 +188,7 @@ export const Card = ({
 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [open]);
+  }, [open, handleClose]);
 
   return (
     <>

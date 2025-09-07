@@ -83,7 +83,7 @@ export default function HowItWorks() {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {steps.map((step, _) => {
+            {steps.map((step) => {
               const Icon = step.icon
               return (
                 <Card key={step.step} className="relative group hover:shadow-xl transition-all duration-300 bg-card/50 backdrop-blur-sm border-border/50">
